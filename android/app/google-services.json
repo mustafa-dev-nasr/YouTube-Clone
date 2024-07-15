@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "324408235600",
+    "project_id": "muatafa-123amini",
+    "storage_bucket": "muatafa-123amini.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324408235600:android:ee59f7762a8897149c2355",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKb1m-meUwHPbqx4R-y1xAocyQx3QCrUI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
