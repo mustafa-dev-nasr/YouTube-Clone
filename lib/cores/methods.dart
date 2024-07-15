@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/features/upload/long_video/video_details_page.dart';
+import 'package:flutter_application_1/features/upload/short_video/padges/short_video_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
 void showErrorSnackBar(String message, context) =>
@@ -21,6 +22,18 @@ Future pickVideo(context) async {
   Navigator.push(context, MaterialPageRoute(builder: (context) {
     return VideoDetailsPage(
       video: video,
+    );
+  }));
+  return video;
+}
+
+Future pickShortVideo(context) async {
+  XFile? file = await ImagePicker().pickVideo(source: ImageSource.gallery);
+  File video = File(file!.path);
+
+  Navigator.push(context, MaterialPageRoute(builder: (context) {
+    return ShortVideoScreen(
+      shortVideo: video,
     );
   }));
   return video;
