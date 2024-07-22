@@ -2,16 +2,18 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/cores/widgets/flat_button.dart';
+import 'package:flutter_application_1/features/upload/short_video/repository/short_video_repositry.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ShortVideoDetails extends StatefulWidget {
+class ShortVideoDetails extends ConsumerStatefulWidget {
   final File shortVideo;
   const ShortVideoDetails({super.key, required this.shortVideo});
 
   @override
-  State<ShortVideoDetails> createState() => _ShortVideoDetailsState();
+  ConsumerState<ShortVideoDetails> createState() => _ShortVideoDetailsState();
 }
 
-class _ShortVideoDetailsState extends State<ShortVideoDetails> {
+class _ShortVideoDetailsState extends ConsumerState<ShortVideoDetails> {
   final captionController = TextEditingController();
   final DateTime date = DateTime.now();
   @override
@@ -42,7 +44,15 @@ class _ShortVideoDetailsState extends State<ShortVideoDetails> {
             Padding(
               padding: const EdgeInsets.only(bottom: 30),
               child: FlatButton(
-                  text: "PUBLISH", onPressed: () {}, colour: Colors.green),
+                  text: "PUBLISH",
+                  onPressed: () async {
+                    await ref.watch(shortVideoProvider).addShortToFirestore(
+                        caption: captionController.text,
+                        video: widget.shortVideo.path,
+                        datePublished: date,
+                        context: context);
+                  },
+                  colour: Colors.green),
             )
           ],
         ),

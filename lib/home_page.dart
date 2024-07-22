@@ -1,7 +1,8 @@
 import 'dart:developer';
 import 'package:flutter_application_1/features/account/accont_page.dart';
 import 'package:flutter_application_1/features/content/bottom_navigation.dart';
-import 'package:flutter_application_1/features/upload/upload_bottom_sheet.dart';
+import 'package:flutter_application_1/features/search/pages/search_page.dart';
+import 'package:flutter_application_1/features/upload/short_video/widgets/upload_bottom_sheet.dart';
 import 'package:flutter_application_1/pages/pages_list.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -62,7 +63,12 @@ class _HomePageState extends State<HomePage> {
                     height: 41.5,
                     child: ImageButton(
                       image: "search.png",
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SearchPage()));
+                      },
                       haveColor: false,
                     ),
                   ),
@@ -77,8 +83,9 @@ class _HomePageState extends State<HomePage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              AccontPage(user: currentUser,)));
+                                          builder: (context) => AccontPage(
+                                                user: currentUser,
+                                              )));
                                 },
                                 child: CircleAvatar(
                                   backgroundImage: CachedNetworkImageProvider(
@@ -117,7 +124,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         bottomNavigationBar: BottomNavigation(
-          onpreseed: (int index) {
+          onPressed: (int index) {
             if (index != 2) {
               currnetIndex = index;
               setState(() {});

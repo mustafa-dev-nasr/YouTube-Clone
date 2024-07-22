@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class BottomNavigation extends StatefulWidget {
-  final Function(int index) onpreseed;
-  const BottomNavigation({Key? key, required this.onpreseed}) : super(key: key);
+  final Function(int index) onPressed;
+  const BottomNavigation({Key? key, required this.onPressed}) : super(key: key);
 
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
@@ -15,7 +15,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 5, bottom: 3),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -45,25 +45,19 @@ class _BottomNavigationState extends State<BottomNavigation> {
               color: Colors.grey[800],
               activeColor: Colors.purple,
               iconSize: 24,
-              tabBackgroundColor: Colors.purple.withOpacity(
-                0.1,
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 5,
-              ),
+              tabBackgroundColor: Colors.purple.withOpacity(0.1),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               tabs: const [
                 GButton(icon: Icons.home, text: "Home"),
                 GButton(icon: Icons.videocam, text: "Shorts"),
-                GButton(icon: Icons.cloud_upload),
-                GButton(icon: Icons.search, text: "Search"),
-                GButton(icon: Icons.heart_broken, text: "Log out"),
+                GButton(icon: Icons.add_circle_outline_sharp),
+                GButton(icon: Icons.logout, text: "Log out"),
               ],
               onTabChange: (index) {
                 setState(() {
                   currentIndex = index;
                 });
-                widget.onpreseed(index);
+                widget.onPressed(index);
               },
               selectedIndex: currentIndex,
             ),
