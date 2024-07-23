@@ -8,7 +8,6 @@ import 'package:shimmer/shimmer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/cores/screens/error_page.dart';
-import 'package:flutter_application_1/cores/screens/loader.dart';
 import 'package:flutter_application_1/cores/widgets/image_button.dart';
 import 'package:flutter_application_1/features/auth/provider/user_porvider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

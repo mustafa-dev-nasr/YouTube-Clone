@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/features/auth/model/user_model.dart';
 import 'package:flutter_application_1/features/auth/provider/user_porvider.dart';
 import 'package:flutter_application_1/features/content/Long_video/parts/video.dart';
+import 'package:flutter_application_1/features/content/Long_video/widgets/home_loder.dart';
 import 'package:flutter_application_1/features/upload/long_video/video_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Post extends ConsumerWidget {
   const Post({
@@ -33,7 +35,22 @@ class Post extends ConsumerWidget {
             },
             child: Column(
               children: [
-                CachedNetworkImage(imageUrl: video.thumbnail),
+                CachedNetworkImage(
+                  width: double.infinity,
+                  height: 200,
+                  fit: BoxFit.fill,
+                  imageUrl: video.thumbnail,
+                  placeholder: (context, url) => Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Container(
+                      width: double.infinity,
+                      height: 200,
+                      color: Colors.white,
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
                 Row(
                   children: [
                     Padding(
@@ -87,7 +104,9 @@ class Post extends ConsumerWidget {
           ),
         );
       },
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () => const Center(
+        child: HomeLoder(),
+      ),
       error: (error, stack) => Center(child: Text('Error: $error')),
     );
   }

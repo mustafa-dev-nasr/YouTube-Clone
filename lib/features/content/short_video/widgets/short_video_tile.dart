@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/features/content/short_video/widgets/short_loder.dart';
 import 'package:flutter_application_1/features/upload/short_video/model/short_video_model.dart';
 import 'package:video_player/video_player.dart';
-import "package:timeago/timeago.dart" as timeago;
 
 class ShortVideoTile extends StatefulWidget {
   final ShortVideoModel shortVideoModel;
@@ -36,7 +36,9 @@ class _ShortVideoTileState extends State<ShortVideoTile> {
   @override
   Widget build(BuildContext context) {
     return _controller.value.isInitialized
-        ? Expanded(
+        ? SizedBox(
+            width: double.infinity,
+            height: double.infinity,
             child: Stack(
               children: [
                 // Video Player
@@ -132,6 +134,6 @@ class _ShortVideoTileState extends State<ShortVideoTile> {
               ],
             ),
           )
-        : const Center(child: CircularProgressIndicator());
+        : const ShortLodor();
   }
 }

@@ -42,9 +42,9 @@ class MyChannel extends ConsumerWidget {
             )),
           ),
           error: (error, stackTrace) {
-                          log('Error: $error');
-                          return const ErrorPage();
-                        },
+            log('Error: $error');
+            return const ErrorPage();
+          },
           loading: () => const HomePageLodoar(),
         );
   }

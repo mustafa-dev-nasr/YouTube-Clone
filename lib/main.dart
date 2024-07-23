@@ -50,7 +50,7 @@ class MyApp extends ConsumerWidget {
               }
 
               if (!userSnapshot.hasData || !userSnapshot.data!.exists) {
-                return UserNamePadge(
+                return UserNamePadge( 
                   user.displayName ?? 'No Name',
                   user.photoURL ?? 'No Photo URL',
                   user.email ?? 'No Email',

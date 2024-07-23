@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/features/channel/my_channel/pages/my_channel_home.dart';
 
 class TabPadge extends StatelessWidget {
   const TabPadge({
@@ -9,9 +10,7 @@ class TabPadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Expanded(
       child: TabBarView(children: [
-        Center(
-          child: Text("Home"),
-        ),
+        MyChannelHome(),
         Center(
           child: Text("Videos"),
         ),
