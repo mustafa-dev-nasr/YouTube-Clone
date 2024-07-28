@@ -92,10 +92,7 @@ class Post extends ConsumerWidget {
                           style: const TextStyle(color: Colors.blueGrey),
                         ),
                       ),
-                      // Text(
-                      //   video.datePublished.toString(),
-                      //   style: const TextStyle(color: Colors.blueGrey),
-                      // ),
+                     
                     ],
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/cores/widgets/image_item.dart';
+import 'package:flutter_application_1/features/channel/my_channel/pages/my_channel.dart';
 
 class Items extends StatelessWidget {
   const Items({super.key});
@@ -13,7 +14,10 @@ class Items extends StatelessWidget {
             height: 35,
             child: ImageItem(
               imageName: "your-channel.png",
-              itemClicked: () {},
+              itemClicked: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const MyChannel()));
+              },
               itemText: "Your Channel",
               haveColor: false,
             ),

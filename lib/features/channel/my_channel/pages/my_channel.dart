@@ -31,7 +31,10 @@ class MyChannel extends ConsumerWidget {
                       TopHeader(
                         userModel: currentUser,
                       ),
-                      const Text("more about tshis channel"),
+                      const Text(
+                        "more about tshis channel",
+                        style: TextStyle(color: Colors.blue),
+                      ),
                       const ButtonsWidgetCustom(),
                       const PageTBar(),
                       const TabPadge(),

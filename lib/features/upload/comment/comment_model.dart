@@ -16,11 +16,12 @@ class CommentModel {
   // Factory constructor to create an instance from a map
   factory CommentModel.fromMap(Map<String, dynamic> map) {
     return CommentModel(
-      commentText: map['commentText'],
-      videoId: map['videoId'],
-      commentId: map['commentId'],
-      profilPic: map['profilPic'],
-      displayName: map['displayName'],
+      commentText: map['commentText'] ??
+          'No text', // Provide default values for better debugging
+      videoId: map['videoId'] ?? 'No videoId',
+      commentId: map['commentId'] ?? 'No commentId',
+      profilPic: map['profilPic'] ?? 'No profile pic',
+      displayName: map['displayName'] ?? 'Anonymous',
     );
   }
 

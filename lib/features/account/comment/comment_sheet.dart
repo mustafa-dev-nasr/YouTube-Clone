@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/cores/screens/error_page.dart';
@@ -11,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CommentSheet extends ConsumerStatefulWidget {
   final VideoModel video;
-  const CommentSheet(this.video, {super.key});
+  const CommentSheet({required this.video, super.key});
 
   @override
   ConsumerState<CommentSheet> createState() => _CommentSheetState();
@@ -47,7 +48,7 @@ class _CommentSheetState extends ConsumerState<CommentSheet> {
           StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("comments")
-                .where("videoId", isNotEqualTo: widget.video.videoId)
+                .where("videoId", isEqualTo: widget.video.videoId)
                 .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData || snapshot.data == null) {
@@ -60,24 +61,29 @@ class _CommentSheetState extends ConsumerState<CommentSheet> {
               final List<CommentModel> coments = commentMap
                   .map((comment) => CommentModel.fromMap(comment.data()))
                   .toList();
-              return ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: coments.length,
-                itemBuilder: (context, index) {
-                  return CommentTile(comment: coments[index]);
-                },
+              return Expanded(
+                child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: coments.length,
+                  itemBuilder: (context, index) {
+                    return CommentTile(comment: coments[index]);
+                  },
+                ),
               );
             },
           ),
           const Spacer(),
           Row(
             children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: CircleAvatar(
                   radius: 18,
                   backgroundColor: Colors.grey,
+                  backgroundImage: user.value != null
+                      ? CachedNetworkImageProvider(user.value!.profilepic)
+                      : null,
                 ),
               ),
               SizedBox(
@@ -94,10 +100,11 @@ class _CommentSheetState extends ConsumerState<CommentSheet> {
               ),
               IconButton(
                   onPressed: () {
-                    ref.watch(uploadCommentProvider).uploadCommentToFirestore(
+                    ref.watch(commentProvider).uploadCommentToFirestore(
                           commentText: commentController.text,
-                          profilPic: user.value!.profilepic,
+                          profilePic: user.value!.profilepic,
                           displayName: user.value!.desplayName,
+                          videoId: widget.video.videoId,
                         );
                     commentController.clear();
                   },
@@ -113,3 +120,30 @@ class _CommentSheetState extends ConsumerState<CommentSheet> {
     );
   }
 }
+/*** StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection("comments")
+                .where("videoId", isEqualTo: widget.video.videoId)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData || snapshot.data == null) {
+                return const ErrorPage();
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Loader();
+              }
+              final commentsMap = snapshot.data!.docs;
+              final List<CommentModel> comments = commentsMap
+                  .map((comment) => CommentModel.fromMap(comment.data()))
+                  .toList();
+              return Expanded(
+                child: ListView.builder(
+                  itemCount: comments.length,
+                  itemBuilder: (context, index) {
+                    return CommentTile(
+                      comment: comments[index],
+                    );
+                  },
+                ),
+              );
+            },
+          ), */

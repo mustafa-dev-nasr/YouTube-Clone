@@ -1,34 +1,35 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:uuid/uuid.dart';
 import 'package:flutter_application_1/features/upload/comment/comment_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
-// Define a provider for the upload function
-final uploadCommentProvider = Provider((ref) => CommentRepository(firestore: FirebaseFirestore.instance));
+final commentProvider = Provider(
+  (ref) => CommentRepository(
+    firestore: FirebaseFirestore.instance,
+  ),
+);
 
 class CommentRepository {
   final FirebaseFirestore firestore;
+  CommentRepository({
+    required this.firestore,
+  });
 
-  CommentRepository({required this.firestore});
-  void uploadCommentToFirestore({
-  required String commentText,
-  required String profilPic,
-  required String displayName,
-}) async {
-  String commentId = const Uuid().v4();
-  CommentModel comment = CommentModel(
-    commentText: commentText,
-    videoId: commentId, // Assuming videoId is same as commentId for now
-    commentId: commentId,
-    profilPic: profilPic,
-    displayName: displayName,
-  );
-
-  await FirebaseFirestore.instance
-      .collection('comments')
-      .doc(commentId)
-      .set(comment.toMap());
+  Future<void> uploadCommentToFirestore({
+    required String commentText,
+    required String videoId,
+    required String displayName,
+    required String profilePic,
+  }) async {
+    String commentId = const Uuid().v4();
+    CommentModel comment = CommentModel(
+      commentText: commentText,
+      videoId: videoId,
+      commentId: commentId,
+      displayName: displayName,
+      profilPic: profilePic,
+    );
+    await firestore.collection("comments").doc(commentId).set(comment.toMap());
+  }
 }
-
-}
-

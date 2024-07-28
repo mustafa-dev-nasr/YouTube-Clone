@@ -42,11 +42,15 @@ class AccontPage extends StatelessWidget {
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20),
+          Text(
+            "@${user.desplayName}",
+            style: const TextStyle(fontSize: 24, color: Colors.blueGrey),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 20),
             child: Text(
-              "@${user.desplayName}",
-              style: const TextStyle(fontSize: 24, color: Colors.blueGrey),
+              "Manage your Google Account",
+              style: TextStyle(color: Colors.blue),
             ),
           ),
           const Items()
