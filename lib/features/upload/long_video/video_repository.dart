@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/features/upload/long_video/video_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,6 +43,33 @@ class VideoRepository {
       print("Video uploaded successfully");
     } catch (e) {
       print("Failed to upload video: $e");
+    }
+  }
+
+  Future<void> likeVideo({
+    required List? likes,
+    required String videoId,
+    required String currentUserId,
+  }) async {
+    if (likes == null) return;
+
+    final videoDoc =
+        FirebaseFirestore.instance.collection("video").doc(videoId);
+
+    try {
+      if (!likes.contains(currentUserId)) {
+        await videoDoc.update({
+          "likes": FieldValue.arrayUnion([currentUserId])
+        });
+        print("Liked video: $videoId by user: $currentUserId");
+      } else {
+        await videoDoc.update({
+          "likes": FieldValue.arrayRemove([currentUserId])
+        });
+        print("Unliked video: $videoId by user: $currentUserId");
+      }
+    } catch (e) {
+      print("Error updating likes for video $videoId: $e");
     }
   }
 }
