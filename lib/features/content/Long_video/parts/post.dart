@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/features/auth/model/user_model.dart';
 import 'package:flutter_application_1/features/auth/provider/user_porvider.dart';
@@ -32,6 +33,10 @@ class Post extends ConsumerWidget {
                       builder: (context) => Video(
                             video: video,
                           )));
+              FirebaseFirestore.instance
+                  .collection("video")
+                  .doc(video.videoId)
+                  .update({"views": FieldValue.increment(1)});
             },
             child: Column(
               children: [
@@ -92,7 +97,6 @@ class Post extends ConsumerWidget {
                           style: const TextStyle(color: Colors.blueGrey),
                         ),
                       ),
-                     
                     ],
                   ),
                 ),

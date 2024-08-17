@@ -24,24 +24,38 @@ class ShortVideoRepository {
   });
 
   Future<void> addShortToFirestore({
-    required context,
+    required BuildContext context,
     required String caption,
     required String video,
     required DateTime datePublished,
   }) async {
+    if (auth.currentUser == null) {
+      print('User not authenticated');
+      // Optionally show a dialog or a snackbar here
+      return;
+    }
+
     ShortVideoModel shortVideoModel = ShortVideoModel(
       caption: caption,
       shortVideo: video,
       userId: auth.currentUser!.uid,
       datePublished: datePublished,
     );
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const HomePage()));
+
     try {
       await firestore.collection('shorts').add(shortVideoModel.toMap());
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const HomePage()));
     } catch (e) {
       // Handle error
       print('Error adding short video to Firestore: $e');
+      // Optionally show a snackbar here
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error adding short video to Firestore: $e'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
     }
   }
 }
