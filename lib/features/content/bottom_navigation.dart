@@ -51,7 +51,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 GButton(icon: Icons.home, text: "Home"),
                 GButton(icon: Icons.videocam, text: "Shorts"),
                 GButton(icon: Icons.add_circle_outline_sharp),
-                GButton(icon: Icons.logout, text: "Log out"),
+                GButton(icon: Icons.subscriptions, text: "MyChannel"),
               ],
               onTabChange: (index) {
                 setState(() {

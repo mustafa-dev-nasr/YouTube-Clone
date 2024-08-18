@@ -1,15 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/cores/widgets/flat_button.dart';
 import 'package:flutter_application_1/features/auth/model/user_model.dart';
 import 'package:flutter_application_1/features/channel/user_channel.dart/pages/user_channel_padge.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SearchChannelTile extends StatelessWidget {
+import '../../channel/my_channel/repository/subscribe_respository.dart';
+
+class SearchChannelTile extends ConsumerWidget {
   final UserModel user;
   const SearchChannelTile({super.key, required this.user});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.only(top: 10, left: 10),
       child: GestureDetector(
@@ -58,7 +62,15 @@ class SearchChannelTile extends StatelessWidget {
                     width: 110,
                     child: FlatButton(
                         text: "Subscribe",
-                        onPressed: () {},
+                        onPressed: ()  async {
+                                   await   ref
+                                          .watch(subscribeRepositoryProvider)
+                                          .subscribeToChannel(
+                                              creatorUserId:  FirebaseAuth.instance.currentUser!.uid,
+                                              userId: user.userId,
+                                              subscriptionList:
+                                                 user.subscriptions);
+                                    },
                         colour: Colors.black),
                   )
                 ],

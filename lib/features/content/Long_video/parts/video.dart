@@ -23,6 +23,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../channel/my_channel/repository/subscribe_respository.dart';
+
 class Video extends ConsumerStatefulWidget {
   final VideoModel video;
   const Video({Key? key, required this.video}) : super(key: key);
@@ -283,7 +285,15 @@ class _VideoState extends ConsumerState<Video> {
                                   padding: const EdgeInsets.only(right: 6),
                                   child: FlatButton(
                                     text: "Subscribe",
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                   await   ref
+                                          .watch(subscribeRepositoryProvider)
+                                          .subscribeToChannel(
+                                              creatorUserId: userData.userId,
+                                              userId: user.value!.userId,
+                                              subscriptionList:
+                                                 user.value!.subscriptions,);
+                                    },
                                     colour: Colors.black,
                                   ),
                                 ),
